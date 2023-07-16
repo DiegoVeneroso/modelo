@@ -1,0 +1,9 @@
+/.dart_tool
+/.flutter-plugins
+/.flutter-plugins-dependencies
+/.idea
+/.metadata
+/.vscode
+/README.md
+/analysis_options.yaml
+/build
