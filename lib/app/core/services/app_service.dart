@@ -7,17 +7,19 @@ class AppService extends GetxService {
 
   Account? account;
 
-  @override
-  void onReady() {}
-
-  signup(Map map) async {
+  AppService() {
     client
         .setEndpoint(constants.API_END_POINT)
         .setProject(constants.PROJECT_ID)
         .setSelfSigned(status: false);
 
     account = Account(client);
+  }
 
+  @override
+  void onReady() {}
+
+  signup(Map map) async {
     await account?.create(
       userId: map["userId"],
       email: map["email"],
@@ -27,16 +29,13 @@ class AppService extends GetxService {
   }
 
   sign(Map map) async {
-    client
-        .setEndpoint(constants.API_END_POINT)
-        .setProject(constants.PROJECT_ID)
-        .setSelfSigned(status: false);
-
-    account = Account(client);
-
     await account?.createEmailSession(
       email: map["email"],
       password: map["password"],
     );
+  }
+
+  logout() async {
+    await account?.deleteSessions();
   }
 }

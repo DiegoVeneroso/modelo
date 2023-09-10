@@ -12,4 +12,8 @@ class AuthRepository {
   Future<User?> sign(Map map) async {
     return await appService.sign(map);
   }
+
+  logout() async {
+    return await appService.logout();
+  }
 }

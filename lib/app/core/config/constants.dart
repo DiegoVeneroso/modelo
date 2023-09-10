@@ -1,3 +1,4 @@
 //base url
-const API_END_POINT = 'http://192.168.1.33/v1';
-const PROJECT_ID = '64b0a87a74347ff2b066';
+const API_END_POINT =
+    'http://ec2-15-228-235-228.sa-east-1.compute.amazonaws.com/v1';
+const PROJECT_ID = 'auth_appwrite';

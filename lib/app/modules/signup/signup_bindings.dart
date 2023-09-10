@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:mots/app/modules/login/login_controller.dart';
 import 'package:mots/app/repository/auth_repository.dart';
 import 'package:mots/app/core/services/app_service.dart';
 import './signup_controller.dart';
@@ -8,6 +9,9 @@ class SignupBindings implements Bindings {
   void dependencies() {
     Get.lazyPut<SignupController>(
       () => SignupController(AuthRepository(AppService())),
+    );
+    Get.lazyPut<LoginController>(
+      () => LoginController(AuthRepository(AppService())),
     );
   }
 }

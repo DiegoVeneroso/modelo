@@ -3,14 +3,19 @@ import 'package:flutter/material.dart';
 import './home_controller.dart';
 
 class HomePage extends GetView<HomeController> {
-    
-    const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
-    @override
-    Widget build(BuildContext context) {
-        return Scaffold(
-            appBar: AppBar(title: const Text('HomePage'),),
-            body: Container(),
-        );
-    }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('HomePage'),
+        actions: [
+          IconButton(
+              onPressed: () => controller.logout(), icon: Icon(Icons.logout))
+        ],
+      ),
+      body: Container(),
+    );
+  }
 }

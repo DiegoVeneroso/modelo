@@ -75,7 +75,8 @@ class LoginController extends GetxController {
         CustomSnackBar.showSuccessSnackBar(
             context: Get.context,
             title: 'Sucesso',
-            message: 'Cadastrado com sucesso!');
+            message: 'Usuario logado com sucesso!');
+        Get.toNamed(Routes.home);
       }).catchError((error) {
         FullScreenDialogLoader.cancelDialog();
 
@@ -94,6 +95,10 @@ class LoginController extends GetxController {
               msgErrorAppwriteException =
                   'Usuário já cadastrado! \nRecupere a senha de acesso.';
               break;
+            case 'user_invalid_credentials':
+              msgErrorAppwriteException =
+                  'Usuario ou senha não conferem! \nVerifique seu usuario e senha.';
+              break;
           }
 
           CustomSnackBar.showErrorSnackBar(
@@ -105,7 +110,7 @@ class LoginController extends GetxController {
           CustomSnackBar.showErrorSnackBar(
               context: Get.context,
               title: 'Erro',
-              message: 'Erro ao cadastrar usuário22!');
+              message: 'Usuario ou senha não conferem!');
         }
       });
     } catch (e) {

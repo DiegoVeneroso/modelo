@@ -1,7 +1,9 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:mots/app/modules/login/login_controller.dart';
 import 'package:mots/app/repository/auth_repository.dart';
+import 'package:mots/app/routes/app_pages.dart';
 import 'package:mots/app/utils/custom_snack_bar.dart';
 import 'package:mots/app/utils/fullScreenDialogLoader.dart';
 
@@ -78,6 +80,19 @@ class SignupController extends GetxController {
             context: Get.context,
             title: 'Sucesso',
             message: 'Cadastrado com sucesso!');
+
+        // authRepository.sign({
+        //   "userId": ID.unique(),
+        //   "name": name,
+        //   "email": email,
+        //   "password": password
+        // }).then((value) {
+        //   Get.toNamed('/home');
+        //   CustomSnackBar.showSuccessSnackBar(
+        //       context: Get.context,
+        //       title: 'Sucesso',
+        //       message: 'Seja bem vindo a home!');
+        // });
       }).catchError((error) {
         FullScreenDialogLoader.cancelDialog();
 

@@ -9,7 +9,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(GetMaterialApp(
-    title: 'Mots',
+    title: 'Auth_appwrite',
     initialRoute: AppPages.initial,
     theme: AppUi.theme,
     initialBinding: AppBinding(),
