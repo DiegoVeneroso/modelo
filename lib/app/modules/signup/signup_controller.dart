@@ -81,6 +81,8 @@ class SignupController extends GetxController {
             title: 'Sucesso',
             message: 'Cadastrado com sucesso!');
 
+        Get.toNamed(Routes.login);
+
         // authRepository.sign({
         //   "userId": ID.unique(),
         //   "name": name,

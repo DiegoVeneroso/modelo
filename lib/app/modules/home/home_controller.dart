@@ -21,6 +21,7 @@ class HomeController extends GetxController {
       FullScreenDialogLoader.showDialog();
 
       await authRepository.logout();
+      Get.toNamed(Routes.login);
     } catch (e) {
       debugPrint('erro no repository');
       FullScreenDialogLoader.cancelDialog();
