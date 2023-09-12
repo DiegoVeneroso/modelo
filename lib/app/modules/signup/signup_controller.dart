@@ -1,7 +1,6 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:mots/app/modules/login/login_controller.dart';
 import 'package:mots/app/repository/auth_repository.dart';
 import 'package:mots/app/routes/app_pages.dart';
 import 'package:mots/app/utils/custom_snack_bar.dart';
@@ -60,6 +59,8 @@ class SignupController extends GetxController {
     required String email,
     required String password,
     required String name,
+    String admin = "false",
+    String? phone = '',
   }) async {
     // if (!isFormValid) {
     //   return;
@@ -73,7 +74,9 @@ class SignupController extends GetxController {
         "userId": ID.unique(),
         "name": name,
         "email": email,
-        "password": password
+        "password": password,
+        "admin": admin,
+        "phone": phone,
       }).then((value) {
         FullScreenDialogLoader.cancelDialog();
         CustomSnackBar.showSuccessSnackBar(

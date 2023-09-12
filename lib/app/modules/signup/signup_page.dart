@@ -17,9 +17,10 @@ class SignupPage extends GetView<SignupController> {
             ElevatedButton(
               onPressed: () async {
                 await controller.validateAndSignUp(
-                    email: 'diegoveneroso.unipampa@gmail.com',
-                    password: '12345678',
-                    name: 'Diego Veneroso');
+                  email: 'diegoveneroso.unipampa@gmail.com',
+                  password: '12345678',
+                  name: 'Diego Veneroso',
+                );
               },
               child: const Text('Cadastrar'),
             )
