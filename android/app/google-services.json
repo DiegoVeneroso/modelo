@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "243564470267",
+    "project_id": "auth-appwite",
+    "storage_bucket": "auth-appwite.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243564470267:android:de751e6bffc055a2f1b55e",
+        "android_client_info": {
+          "package_name": "br.com.frontapp.auth_appwrite"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBV3q1aDKWo9bAon_g74iNQucViD_cK8Ds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

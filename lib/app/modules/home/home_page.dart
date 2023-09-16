@@ -12,21 +12,24 @@ class HomePage extends GetView<HomeController> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: FutureBuilder<User?>(
-            future: AppService().getUser(),
-            builder: (_, snapshot) {
-              if (snapshot.hasError) return CircularProgressIndicator();
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              }
-              User? user = snapshot.data;
-              // return Text(user?.prefs.data['Admin'].toString() ?? '');
-              return Text(user?.phone ?? '');
-            },
-          ),
+          title: Text('gfds'),
+          // title: FutureBuilder<User?>(
+          //   future: AppService().getUser(),
+
+          //   builder: (_, snapshot) {
+          //     if (snapshot.hasError) return const CircularProgressIndicator();
+          //     if (snapshot.connectionState == ConnectionState.waiting) {
+          //       return const CircularProgressIndicator();
+          //     }
+          //     User? user = snapshot.data;
+          //     // return Text(user?.prefs.data['Admin'].toString() ?? '');
+          //     return Text(user?.name ?? '');
+          //   },
+          // ),
           actions: [
             IconButton(
-                onPressed: () => controller.logout(), icon: Icon(Icons.logout))
+                onPressed: () => controller.logout(),
+                icon: const Icon(Icons.logout))
           ],
         ),
         body: Container(),
