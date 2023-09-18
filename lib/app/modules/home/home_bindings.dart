@@ -7,7 +7,8 @@ class HomeBindings implements Bindings {
   @override
   void dependencies() {
     Get.lazyPut<HomeController>(
-      () => HomeController(AuthRepository(AppService())),
+      // () => HomeController(AuthRepository(AppService())),
+      () => HomeController(AuthRepository()),
     );
   }
 }

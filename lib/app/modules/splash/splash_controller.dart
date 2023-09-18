@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:mots/app/routes/app_pages.dart';
+import 'package:auth_modelo/app/routes/app_pages.dart';
 
 class SplashController extends GetxController {
   @override

@@ -1,7 +1,5 @@
-import 'package:appwrite/models.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:mots/app/core/services/app_service.dart';
 import './home_controller.dart';
 
 class HomePage extends GetView<HomeController> {
@@ -12,10 +10,9 @@ class HomePage extends GetView<HomeController> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('gfds'),
+          title: const Text('gfds'),
           // title: FutureBuilder<User?>(
           //   future: AppService().getUser(),
-
           //   builder: (_, snapshot) {
           //     if (snapshot.hasError) return const CircularProgressIndicator();
           //     if (snapshot.connectionState == ConnectionState.waiting) {

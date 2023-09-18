@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:mots/app/modules/home/home_bindings.dart';
-import 'package:mots/app/modules/home/home_page.dart';
-import 'package:mots/app/modules/signup/signup_bindings.dart';
-import 'package:mots/app/modules/signup/signup_page.dart';
+import 'package:auth_modelo/app/modules/home/home_bindings.dart';
+import 'package:auth_modelo/app/modules/home/home_page.dart';
+import 'package:auth_modelo/app/modules/signup/signup_bindings.dart';
+import 'package:auth_modelo/app/modules/signup/signup_page.dart';
 
 import '../modules/login/login_bindings.dart';
 import '../modules/login/login_page.dart';
