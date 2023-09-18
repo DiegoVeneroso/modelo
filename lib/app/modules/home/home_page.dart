@@ -1,9 +1,11 @@
+import 'package:appwrite/models.dart';
+import 'package:auth_modelo/app/repository/auth_repository.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import './home_controller.dart';
 
 class HomePage extends GetView<HomeController> {
-  const HomePage({Key? key}) : super(key: key);
+  AuthRepository authRepository = AuthRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class HomePage extends GetView<HomeController> {
         appBar: AppBar(
           title: const Text('gfds'),
           // title: FutureBuilder<User?>(
-          //   future: AppService().getUser(),
+          //   future: authRepository.getUserIfExists(),
           //   builder: (_, snapshot) {
           //     if (snapshot.hasError) return const CircularProgressIndicator();
           //     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -20,7 +22,7 @@ class HomePage extends GetView<HomeController> {
           //     }
           //     User? user = snapshot.data;
           //     // return Text(user?.prefs.data['Admin'].toString() ?? '');
-          //     return Text(user?.name ?? '');
+          //     return Text(user!.email.toString());
           //   },
           // ),
           actions: [

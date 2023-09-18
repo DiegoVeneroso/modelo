@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:appwrite/appwrite.dart';
+import 'package:appwrite/models.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import '../core/config/constants.dart' as constants;
 
@@ -40,10 +41,6 @@ class AuthRepository {
         name: map["name"],
       );
 
-      // if (user!.$id.isEmpty) {
-      //   return user.$id;
-      // }
-
       FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
       var token = await firebaseMessaging.getToken();
 
@@ -61,28 +58,54 @@ class AuthRepository {
             'tokenPush': token,
           });
 
-      // await account?.createEmailSession(
-      //   email: map["email"],
-      //   password: map["password"],
-      // );
-
-      // var sessionID = session?.$id;
+      log('Usuario cadastrado com sucesso!');
     } on AppwriteException catch (e) {
-      log(e.message.toString());
-      throw (e.message.toString());
-      // return e.runtimeType;
+      log(e.response['type']);
+
+      throw (e.response['type']);
     }
   }
 
   sign(Map map) async {
-    await account?.createEmailSession(
-      email: map["email"],
-      password: map["password"],
-    );
+    try {
+      client
+          .setEndpoint(constants.API_END_POINT)
+          .setProject(constants.PROJECT_ID)
+          .setSelfSigned(status: false);
+
+      account = Account(client);
+
+      await account?.createEmailSession(
+        email: map["email"],
+        password: map["password"],
+      );
+    } on AppwriteException catch (e) {
+      log(e.response['type']);
+
+      throw (e.response['type']);
+    }
   }
 
   logout() async {
     await account?.deleteSessions();
+  }
+
+  Future<Preferences> getUserPreferences() async {
+    return await account!.getPrefs();
+  }
+
+  updatePreferences({required String bio}) async {
+    return account!.updatePrefs(prefs: {'bio': bio});
+  }
+
+  Future<User?> getUserIfExists() async {
+    try {
+      final user = await this.account?.get();
+      return user;
+    } on AppwriteException catch (e) {
+      if (e.code != 401 || e.type != 'general_unauthorized_scope') rethrow;
+    }
+    return null;
   }
   // final AppService appService;
   // AuthRepository(this.appService);

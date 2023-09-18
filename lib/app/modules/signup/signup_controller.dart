@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:appwrite/appwrite.dart';
+import 'package:auth_modelo/app/modules/login/login_controller.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:auth_modelo/app/repository/auth_repository.dart';
@@ -14,6 +15,8 @@ class SignupController extends GetxController with LoaderMixin, MessagesMixin {
   final AuthRepository authRepository;
 
   SignupController(this.authRepository);
+
+  LoginController loginController = LoginController(AuthRepository());
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -100,7 +103,7 @@ class SignupController extends GetxController with LoaderMixin, MessagesMixin {
     // } catch (e) {
     //   _message(
     //     MessageModel(
-    //       title: 'Erro!',
+    //       title: 'Atenção!',
     //       message: e.toString(),
     //       type: MessageType.error,
     //     ),
@@ -123,13 +126,47 @@ class SignupController extends GetxController with LoaderMixin, MessagesMixin {
         "url_avatar": url_avatar,
       });
       _loading.toggle();
-    } catch (e) {
-      print('deu erri no repo e estourou no controler');
-      _loading.toggle();
       _message(
         MessageModel(
-          title: 'Erro!',
-          message: e.toString(),
+          title: 'Parabéns!',
+          message: 'Cadastrado com sucesso!',
+          type: MessageType.success,
+        ),
+      );
+      await loginController.validateAndSign(email: email, password: password);
+    } catch (e) {
+      print(e.toString());
+      _loading.toggle();
+
+      switch (e) {
+        case 'general_rate_limit_exceeded':
+          msgErrorAppwriteException =
+              'Muitas tentativas de acesso! \nTente mais tarde.';
+          break;
+        case 'user_email_already_exists':
+          msgErrorAppwriteException =
+              'E-mail já cadastrado! \nRecupere a senha de acesso.';
+          break;
+        case 'user_already_exists':
+          msgErrorAppwriteException =
+              'Usuário já cadastrado! \nRecupere a senha de acesso.';
+          break;
+        case 'user_invalid_credentials':
+          msgErrorAppwriteException =
+              'Usuario ou senha não conferem! \nVerifique seu usuario e senha.';
+          break;
+      }
+
+      // switch (e) {
+      //   case 'A user with the same id, email, or phone already exists in your project.':
+      //     text = 'E-mail já cadastrado, recupere a sua senha!';
+      //     break;
+      // }
+
+      _message(
+        MessageModel(
+          title: 'Atenção!',
+          message: msgErrorAppwriteException,
           type: MessageType.error,
         ),
       );
@@ -192,7 +229,7 @@ class SignupController extends GetxController with LoaderMixin, MessagesMixin {
 
     //     _message(
     //       MessageModel(
-    //         title: 'Erro!',
+    //         title: 'Atenção!',
     //         message: msgErrorAppwriteException,
     //         type: MessageType.error,
     //       ),
@@ -200,7 +237,7 @@ class SignupController extends GetxController with LoaderMixin, MessagesMixin {
     //   } else {
     //     _message(
     //       MessageModel(
-    //         title: 'Erro!',
+    //         title: 'Atenção!',
     //         message: 'Erro ao cadastrar usuário!',
     //         type: MessageType.error,
     //       ),
