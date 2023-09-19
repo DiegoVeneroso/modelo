@@ -76,6 +76,19 @@ class AuthRepository {
     }
   }
 
+  recoveryPassword(Map map) async {
+    try {
+      await ApiClient.account.createRecovery(
+          email: map['email'],
+          url:
+              'http://ec2-15-228-235-228.sa-east-1.compute.amazonaws.com/v1/account/recovery');
+      //http://ec2-15-228-235-228.sa-east-1.compute.amazonaws.com/v1/account/recovery
+    } on AppwriteException catch (e) {
+      print('erro no repo');
+      throw (e);
+    }
+  }
+
   Future<User?> getUserIfExists() async {
     try {
       final user = await ApiClient.account.get();

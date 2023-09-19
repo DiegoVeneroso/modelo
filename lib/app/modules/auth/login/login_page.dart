@@ -115,6 +115,22 @@ class _LoginPageState extends AppState<LoginPage, LoginController> {
                               ),
                             ),
                           ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text('Esqueceu a senha?'),
+                            TextButton(
+                              onPressed: () {
+                                controller.authRepository.recoveryPassword(
+                                    {'email': 'diegopereira@unipampa.edu.br'});
+                              },
+                              child: const Text(
+                                'Recuperar senha',
+                                style: AppTheme.textBold,
+                              ),
+                            ),
+                          ],
                         )
                       ],
                     ),
