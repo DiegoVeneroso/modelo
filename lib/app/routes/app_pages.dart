@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'package:auth_modelo/app/modules/home/home_bindings.dart';
 import 'package:auth_modelo/app/modules/home/home_page.dart';
-import 'package:auth_modelo/app/modules/signup/signup_bindings.dart';
-import 'package:auth_modelo/app/modules/signup/signup_page.dart';
+import 'package:auth_modelo/app/modules/auth/register/register_bindigns.dart';
+import 'package:auth_modelo/app/modules/auth/register/register_page.dart';
 
-import '../modules/login/login_bindings.dart';
-import '../modules/login/login_page.dart';
+import '../modules/auth/login/login_bindings.dart';
+import '../modules/auth/login/login_page.dart';
 import '../modules/splash/splash_binding.dart';
 import '../modules/splash/splash_page.dart';
 part 'app_routes.dart';
@@ -27,9 +27,9 @@ class AppPages {
       binding: LoginBindings(),
     ),
     GetPage(
-      name: _Paths.signup,
-      page: () => const SignupPage(),
-      binding: SignupBindings(),
+      name: _Paths.register,
+      page: () => const RegisterPage(),
+      binding: RegisterBindings(),
     ),
     GetPage(
       name: _Paths.home,

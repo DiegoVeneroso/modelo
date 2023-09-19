@@ -2,58 +2,42 @@ import 'dart:developer';
 
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
+
+import 'package:auth_modelo/app/core/config/api_client.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import '../core/config/constants.dart' as constants;
 
 class AuthRepository {
-  Client client = Client();
-  Databases? databases;
+  User? _current;
+  User? get current => _current;
 
-  Account? account;
-  // User? _user;
+  Session? _session;
+  Session? get session => _session;
 
-  AppService() {
-    client
-        .setEndpoint(constants.API_END_POINT)
-        .setProject(constants.PROJECT_ID)
-        .setSelfSigned(status: false);
-
-    account = Account(client);
-    databases = Databases(client);
-  }
-
-  @override
-  void onReady() {}
-
-  signup(Map map) async {
+  register(Map map) async {
     try {
-      client
-          .setEndpoint(constants.API_END_POINT)
-          .setProject(constants.PROJECT_ID)
-          .setSelfSigned(status: false);
-
-      account = Account(client);
-
-      var user = await account?.create(
+      final result = await ApiClient.account.create(
         userId: ID.unique(),
         email: map["email"],
         password: map["password"],
         name: map["name"],
       );
+      _current = result;
+
+      var id = result.$id;
 
       FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
       var token = await firebaseMessaging.getToken();
 
-      await databases?.createDocument(
+      await ApiClient.databases.createDocument(
           databaseId: 'db_auth',
           collectionId: 'cl_auth',
           documentId: ID.unique(),
           data: {
-            'userID': user?.$id,
+            'userID': id,
             'name': map["name"],
             'email': map["email"],
             'phone': map["phone"],
-            'admin': map["admin"] == false ? false : true,
+            'admin': map["admin"],
             'url_avatar': map["url_avatar"],
             'tokenPush': token,
           });
@@ -66,20 +50,17 @@ class AuthRepository {
     }
   }
 
-  sign(Map map) async {
+  login(Map map) async {
     try {
-      client
-          .setEndpoint(constants.API_END_POINT)
-          .setProject(constants.PROJECT_ID)
-          .setSelfSigned(status: false);
-
-      account = Account(client);
-
-      await account?.createEmailSession(
+      final session = await ApiClient.account.createEmailSession(
         email: map["email"],
         password: map["password"],
       );
+      _session = session;
+      print('_session');
+      print(_session?.$id);
     } on AppwriteException catch (e) {
+      _session = null;
       log(e.response['type']);
 
       throw (e.response['type']);
@@ -87,38 +68,21 @@ class AuthRepository {
   }
 
   logout() async {
-    await account?.deleteSessions();
-  }
-
-  Future<Preferences> getUserPreferences() async {
-    return await account!.getPrefs();
-  }
-
-  updatePreferences({required String bio}) async {
-    return account!.updatePrefs(prefs: {'bio': bio});
+    try {
+      await ApiClient.account.deleteSession(sessionId: 'current');
+    } on AppwriteException catch (e) {
+      print('erro no repo');
+      throw (e);
+    }
   }
 
   Future<User?> getUserIfExists() async {
     try {
-      final user = await this.account?.get();
+      final user = await ApiClient.account.get();
+      print(user.email);
       return user;
     } on AppwriteException catch (e) {
-      if (e.code != 401 || e.type != 'general_unauthorized_scope') rethrow;
+      throw (e);
     }
-    return null;
   }
-  // final AppService appService;
-  // AuthRepository(this.appService);
-
-  // Future<User?> signup(Map map) async {
-  //   return await appService.signup(map);
-  // }
-
-  // Future<User?> sign(Map map) async {
-  //   return await appService.sign(map);
-  // }
-
-  // logout() async {
-  //   return await appService.logout();
-  // }
 }

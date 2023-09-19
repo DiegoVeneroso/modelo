@@ -1,12 +1,13 @@
 import 'package:auth_modelo/app/core/ui/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:validatorless/validatorless.dart';
 
-import '../../core/ui/app_state.dart';
-import '../../core/ui/widgets/custom_appbar.dart';
-import '../../core/ui/widgets/custom_button.dart';
-import '../../core/ui/widgets/custom_textformfield.dart';
+import '../../../core/ui/app_state.dart';
+import '../../../core/ui/widgets/custom_appbar.dart';
+import '../../../core/ui/widgets/custom_button.dart';
+import '../../../core/ui/widgets/custom_textformfield.dart';
 import 'login_controller.dart';
 
 class LoginPage extends StatefulWidget {
@@ -17,6 +18,17 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends AppState<LoginPage, LoginController> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailEC = TextEditingController();
+  final _passwordEC = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailEC.dispose();
+    _passwordEC.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,13 +47,13 @@ class _LoginPageState extends AppState<LoginPage, LoginController> {
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Form(
-                    key: controller.formKey,
+                    key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Login',
-                          style: context.textTheme.headline6?.copyWith(
+                          style: context.textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: context.theme.primaryColorDark),
                         ),
@@ -50,37 +62,43 @@ class _LoginPageState extends AppState<LoginPage, LoginController> {
                         ),
                         CustomTextformfield(
                           label: 'E-mail',
-                          controller: controller.emailEditingController,
-                          validator: null,
-                          // validator: controller.validateEmail(
-                          //     controller.emailEditingController.text),
+                          controller: _emailEC,
+                          validator: Validatorless.multiple([
+                            Validatorless.required('E-mail obrigatório'),
+                            Validatorless.email('E-mail inválido'),
+                          ]),
                         ),
                         const SizedBox(
                           height: 30,
                         ),
-                        // CustomTextformfield(
-                        //   label: 'Senha',
-                        //   obscureText: true,
-                        //   controller: controller.passwordEditingController,
-                        //   validator: controller.validateEmail(
-                        //       controller.emailEditingController.text),
-                        // ),
-                        // const SizedBox(
-                        //   height: 50,
-                        // ),
+                        CustomTextformfield(
+                          label: 'Senha',
+                          obscureText: true,
+                          controller: _passwordEC,
+                          validator: Validatorless.multiple([
+                            Validatorless.required('Senha obrigatório'),
+                            Validatorless.min(
+                                8, 'Senha deve conter pelo menos 8 caracteres'),
+                          ]),
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
                         Center(
                           child: CustomButton(
-                              width: double.infinity,
-                              label: 'ENTRAR',
-                              onPressed: () {
-                                controller.validateEmail(
-                                    controller.emailEditingController.text);
-                                // controller.validateAndSign(
-                                //   email: controller.emailEditingController.text,
-                                //   password:
-                                //       controller.passwordEditingController.text,
-                                // );
-                              }),
+                            width: double.infinity,
+                            label: 'ENTRAR',
+                            onPressed: () {
+                              final formValid =
+                                  _formKey.currentState?.validate() ?? false;
+                              if (formValid) {
+                                controller.login(
+                                  email: _emailEC.text,
+                                  password: _passwordEC.text,
+                                );
+                              }
+                            },
+                          ),
                         ),
                         const Spacer(),
                         Row(
@@ -89,7 +107,7 @@ class _LoginPageState extends AppState<LoginPage, LoginController> {
                             const Text('Não possui uma conta?'),
                             TextButton(
                               onPressed: () {
-                                Get.toNamed('/auth/register');
+                                controller.moveToRegister();
                               },
                               child: const Text(
                                 'Cadastre-se',

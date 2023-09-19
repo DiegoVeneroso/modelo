@@ -39,7 +39,7 @@ extension MessageTypeColorExt on MessageType {
       case MessageType.info:
         return Colors.blue[200]!;
       case MessageType.success:
-        return Color.fromARGB(255, 23, 206, 154)!;
+        return Color.fromARGB(255, 23, 206, 154);
     }
   }
 

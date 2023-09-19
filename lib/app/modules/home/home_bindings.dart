@@ -1,6 +1,7 @@
+import 'package:auth_modelo/app/repository/auth_repository.dart';
+import 'package:auth_modelo/app/repository/home_repository.dart';
 import 'package:get/get.dart';
-import '../../core/services/app_service.dart';
-import '../../repository/auth_repository.dart';
+
 import './home_controller.dart';
 
 class HomeBindings implements Bindings {
@@ -8,7 +9,10 @@ class HomeBindings implements Bindings {
   void dependencies() {
     Get.lazyPut<HomeController>(
       // () => HomeController(AuthRepository(AppService())),
-      () => HomeController(AuthRepository()),
+      () => HomeController(
+        HomeRepository(),
+        AuthRepository(),
+      ),
     );
   }
 }
