@@ -49,13 +49,13 @@ class LoginController extends GetxController with LoaderMixin, MessagesMixin {
     nameEditingController.clear();
   }
 
-  FormFieldValidator<String> validateEmail(String value) {
+  validateEmail(String value) {
     return Validatorless.multiple([
       Validatorless.required('E-mail obrigatório'),
       Validatorless.email('E-mail inválido'),
     ]);
     // if (!GetUtils.isEmail(value)) {
-    //   return "E-mail obrigatório";
+    //   print("E-mail obrigatório");
     // }
     // return null;
   }

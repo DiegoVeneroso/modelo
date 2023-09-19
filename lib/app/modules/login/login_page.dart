@@ -51,8 +51,9 @@ class _LoginPageState extends AppState<LoginPage, LoginController> {
                         CustomTextformfield(
                           label: 'E-mail',
                           controller: controller.emailEditingController,
-                          validator: controller.validateEmail(
-                              controller.emailEditingController.text),
+                          validator: null,
+                          // validator: controller.validateEmail(
+                          //     controller.emailEditingController.text),
                         ),
                         const SizedBox(
                           height: 30,
@@ -72,11 +73,13 @@ class _LoginPageState extends AppState<LoginPage, LoginController> {
                               width: double.infinity,
                               label: 'ENTRAR',
                               onPressed: () {
-                                controller.validateAndSign(
-                                  email: controller.emailEditingController.text,
-                                  password:
-                                      controller.passwordEditingController.text,
-                                );
+                                controller.validateEmail(
+                                    controller.emailEditingController.text);
+                                // controller.validateAndSign(
+                                //   email: controller.emailEditingController.text,
+                                //   password:
+                                //       controller.passwordEditingController.text,
+                                // );
                               }),
                         ),
                         const Spacer(),
