@@ -4,6 +4,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:auth_modelo/app/routes/app_pages.dart';
+import 'package:validatorless/validatorless.dart';
 
 import '../../core/mixins/loader_mixin.dart';
 import '../../core/mixins/messages_mixin.dart';
@@ -48,11 +49,15 @@ class LoginController extends GetxController with LoaderMixin, MessagesMixin {
     nameEditingController.clear();
   }
 
-  String? validateEmail(String value) {
-    if (!GetUtils.isEmail(value)) {
-      return "E-mail obrigatório";
-    }
-    return null;
+  FormFieldValidator<String> validateEmail(String value) {
+    return Validatorless.multiple([
+      Validatorless.required('E-mail obrigatório'),
+      Validatorless.email('E-mail inválido'),
+    ]);
+    // if (!GetUtils.isEmail(value)) {
+    //   return "E-mail obrigatório";
+    // }
+    // return null;
   }
 
   String? validatePassword(String value) {
@@ -74,53 +79,54 @@ class LoginController extends GetxController with LoaderMixin, MessagesMixin {
     required String email,
     required String password,
   }) async {
-    // if (!isFormValid) {
-    //   return;
-    // } else {
-    // formKey.currentState!.save();
+    if (!isFormValid) {
+      return null;
+    } else {
+      formKey.currentState!.save();
 
-    try {
-      _loading.toggle();
+      try {
+        _loading.toggle();
 
-      await authRepository.sign({"email": email, "password": password});
+        await authRepository.sign({"email": email, "password": password});
 
-      _message(
-        MessageModel(
-          title: 'Parabéns!',
-          message: 'Conectado com sucesso!',
-          type: MessageType.success,
-        ),
-      );
-      Get.toNamed(Routes.home);
-    } catch (e) {
-      _loading.toggle();
+        _message(
+          MessageModel(
+            title: 'Parabéns!',
+            message: 'Conectado com sucesso!',
+            type: MessageType.success,
+          ),
+        );
+        Get.toNamed(Routes.home);
+      } catch (e) {
+        _loading.toggle();
 
-      log(e.toString());
-      switch (e) {
-        case 'general_rate_limit_exceeded':
-          msgErrorAppwriteException =
-              'Muitas tentativas de acesso! \nTente mais tarde.';
-          break;
-        case 'user_email_already_exists':
-          msgErrorAppwriteException =
-              'E-mail já cadastrado! \nRecupere a senha de acesso.';
-          break;
-        case 'user_already_exists':
-          msgErrorAppwriteException =
-              'Usuário já cadastrado! \nRecupere a senha de acesso.';
-          break;
-        case 'user_invalid_credentials':
-          msgErrorAppwriteException =
-              'Usuario ou senha não conferem! \nVerifique seu usuario e senha.';
-          break;
+        log(e.toString());
+        switch (e) {
+          case 'general_rate_limit_exceeded':
+            msgErrorAppwriteException =
+                'Muitas tentativas de acesso! \nTente mais tarde.';
+            break;
+          case 'user_email_already_exists':
+            msgErrorAppwriteException =
+                'E-mail já cadastrado! \nRecupere a senha de acesso.';
+            break;
+          case 'user_already_exists':
+            msgErrorAppwriteException =
+                'Usuário já cadastrado! \nRecupere a senha de acesso.';
+            break;
+          case 'user_invalid_credentials':
+            msgErrorAppwriteException =
+                'Usuario ou senha não conferem! \nVerifique seu usuario e senha.';
+            break;
+        }
+        _message(
+          MessageModel(
+            title: 'Atenção!',
+            message: msgErrorAppwriteException,
+            type: MessageType.error,
+          ),
+        );
       }
-      _message(
-        MessageModel(
-          title: 'Atenção!',
-          message: msgErrorAppwriteException,
-          type: MessageType.error,
-        ),
-      );
     }
   }
 }
