@@ -31,6 +31,10 @@ class LoginController extends GetxController with LoaderMixin, MessagesMixin {
     Get.toNamed(Routes.register);
   }
 
+  moveToRecoveryPassword() {
+    Get.toNamed(Routes.recovery_password);
+  }
+
   moveToHome() {
     Get.toNamed(Routes.home);
   }

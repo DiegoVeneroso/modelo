@@ -76,15 +76,16 @@ class AuthRepository {
     }
   }
 
-  recoveryPassword(Map map) async {
+  recoveryPassword(String email) async {
     try {
       await ApiClient.account.createRecovery(
-          email: map['email'],
-          url:
-              'http://ec2-15-228-235-228.sa-east-1.compute.amazonaws.com/v1/account/recovery');
-      //http://ec2-15-228-235-228.sa-east-1.compute.amazonaws.com/v1/account/recovery
+        email: email,
+        url: 'http://ec2-15-228-235-228.sa-east-1.compute.amazonaws.com:3000',
+        // url: 'https://newpassfrontapp.netlify.app',
+      );
+      print('erro no envio do email de recuperação de senha');
     } on AppwriteException catch (e) {
-      print('erro no repo');
+      print('erro no envio do email de recuperação de senha');
       throw (e);
     }
   }

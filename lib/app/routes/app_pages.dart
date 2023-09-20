@@ -1,3 +1,5 @@
+import 'package:auth_modelo/app/modules/auth/recovery_password/recovery_password_bindings.dart';
+import 'package:auth_modelo/app/modules/auth/recovery_password/recovery_password_page.dart';
 import 'package:get/get.dart';
 import 'package:auth_modelo/app/modules/home/home_bindings.dart';
 import 'package:auth_modelo/app/modules/home/home_page.dart';
@@ -35,6 +37,11 @@ class AppPages {
       name: _Paths.home,
       page: () => HomePage(),
       binding: HomeBindings(),
+    ),
+    GetPage(
+      name: _Paths.recovery_password,
+      page: () => RecoveyPasswordPage(),
+      binding: RecoveyPasswordBindings(),
     ),
   ];
 }

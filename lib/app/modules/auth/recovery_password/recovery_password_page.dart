@@ -8,16 +8,17 @@ import '../../../core/ui/app_state.dart';
 import '../../../core/ui/widgets/custom_appbar.dart';
 import '../../../core/ui/widgets/custom_button.dart';
 import '../../../core/ui/widgets/custom_textformfield.dart';
-import 'login_controller.dart';
+import 'recovery_password_controller.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RecoveyPasswordPage extends StatefulWidget {
+  const RecoveyPasswordPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RecoveyPasswordPage> createState() => _RecoveyPasswordPageState();
 }
 
-class _LoginPageState extends AppState<LoginPage, LoginController> {
+class _RecoveyPasswordPageState
+    extends AppState<RecoveyPasswordPage, RecoveyPasswordController> {
   final _formKey = GlobalKey<FormState>();
   final _emailEC = TextEditingController();
   final _passwordEC = TextEditingController();
@@ -52,7 +53,7 @@ class _LoginPageState extends AppState<LoginPage, LoginController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Login',
+                          'Recuperar senha',
                           style: context.textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: context.theme.primaryColorDark),
@@ -61,24 +62,11 @@ class _LoginPageState extends AppState<LoginPage, LoginController> {
                           height: 30,
                         ),
                         CustomTextformfield(
-                          label: 'E-mail',
+                          label: 'E-mail cadastrado',
                           controller: _emailEC,
                           validator: Validatorless.multiple([
                             Validatorless.required('E-mail obrigatório'),
                             Validatorless.email('E-mail inválido'),
-                          ]),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        CustomTextformfield(
-                          label: 'Senha',
-                          obscureText: true,
-                          controller: _passwordEC,
-                          validator: Validatorless.multiple([
-                            Validatorless.required('Senha obrigatório'),
-                            Validatorless.min(
-                                8, 'Senha deve conter pelo menos 8 caracteres'),
                           ]),
                         ),
                         const SizedBox(
@@ -87,52 +75,17 @@ class _LoginPageState extends AppState<LoginPage, LoginController> {
                         Center(
                           child: CustomButton(
                             width: double.infinity,
-                            label: 'ENTRAR',
+                            label: 'RECUPERAR SENHA',
                             onPressed: () {
                               final formValid =
                                   _formKey.currentState?.validate() ?? false;
                               if (formValid) {
-                                controller.login(
-                                  email: _emailEC.text,
-                                  password: _passwordEC.text,
-                                );
+                                controller.recoveryPassword(
+                                    email: _emailEC.text);
                               }
                             },
                           ),
                         ),
-                        const Spacer(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text('Não possui uma conta?'),
-                            TextButton(
-                              onPressed: () {
-                                controller.moveToRegister();
-                              },
-                              child: const Text(
-                                'Cadastre-se',
-                                style: AppTheme.textBold,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text('Esqueceu a senha?'),
-                            TextButton(
-                              onPressed: () {
-                                controller.moveToRecoveryPassword();
-                                // controller.authRepository.recoveryPassword(
-                                //     {'email': 'diegopereira@unipampa.edu.br'});
-                              },
-                              child: const Text(
-                                'Recuperar senha',
-                                style: AppTheme.textBold,
-                              ),
-                            ),
-                          ],
-                        )
                       ],
                     ),
                   ),
