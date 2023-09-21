@@ -33,9 +33,6 @@ class _RecoveyPasswordPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppbar(
-        elevation: 0,
-      ),
       backgroundColor: Colors.white,
       body: LayoutBuilder(
         builder: (_, constraints) {
@@ -52,11 +49,23 @@ class _RecoveyPasswordPageState
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Recuperar senha',
-                          style: context.textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: context.theme.primaryColorDark),
+                        Center(
+                          child: Container(
+                            width: 200,
+                            height: 200,
+                            child: Image.asset(
+                              'assets/images/logo.png',
+                              width: 80,
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Text(
+                            'Recuperar a senha',
+                            style: context.textTheme.titleLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: context.theme.primaryColorDark),
+                          ),
                         ),
                         const SizedBox(
                           height: 30,
@@ -70,7 +79,7 @@ class _RecoveyPasswordPageState
                           ]),
                         ),
                         const SizedBox(
-                          height: 50,
+                          height: 30,
                         ),
                         Center(
                           child: CustomButton(
@@ -83,6 +92,18 @@ class _RecoveyPasswordPageState
                                 controller.recoveryPassword(
                                     email: _emailEC.text);
                               }
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Center(
+                          child: CustomButton(
+                            width: double.infinity,
+                            label: 'VOLTAR',
+                            onPressed: () {
+                              Get.back();
                             },
                           ),
                         ),

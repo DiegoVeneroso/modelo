@@ -11,19 +11,21 @@ class CustomAppbar extends AppBar {
           centerTitle: true,
           title: Row(
             children: [
-              Image.asset(
-                'assets/images/logo.png',
-                width: 80,
+              Center(
+                child: Image.asset(
+                  'assets/images/logo.png',
+                  width: 80,
+                ),
               ),
               Text('fdas'
                   // style: const TextStyle(color: Colors.black, fontSize: 10),
                   ),
-              TextButton(
-                onPressed: () {
-                  // Get.find<AuthService>().logout();
-                },
-                child: Text('Sair'),
-              ),
+              // TextButton(
+              //   onPressed: () {
+              //     // Get.find<AuthService>().logout();
+              //   },
+              //   child: Text('Sair'),
+              // ),
             ],
           ),
           iconTheme: const IconThemeData(color: Colors.black),

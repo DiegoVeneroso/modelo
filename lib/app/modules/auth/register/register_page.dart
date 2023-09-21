@@ -34,9 +34,6 @@ class _RegisterPageState extends AppState<RegisterPage, RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppbar(
-        elevation: 0,
-      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: IntrinsicHeight(
@@ -47,21 +44,26 @@ class _RegisterPageState extends AppState<RegisterPage, RegisterController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Cadastro',
-                    style: context.textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: context.theme.primaryColorDark),
+                  Center(
+                    child: Container(
+                      width: 200,
+                      height: 200,
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        width: 80,
+                      ),
+                    ),
                   ),
-                  Text(
-                    'Preencha os campos abaixo para criar o  seu cadastro.',
-                    style: context.textTheme.bodyLarge,
+                  Center(
+                    child: Text(
+                      'Cadastre-se',
+                      style: context.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: context.theme.primaryColorDark),
+                    ),
                   ),
                   const SizedBox(
-                    height: 30,
-                  ),
-                  const SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   CustomTextformfield(
                     label: 'Nome',
@@ -69,7 +71,7 @@ class _RegisterPageState extends AppState<RegisterPage, RegisterController> {
                     validator: Validatorless.required('Nome Obrigatório'),
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 15,
                   ),
                   CustomTextformfield(
                     label: 'E-mail',
@@ -80,7 +82,7 @@ class _RegisterPageState extends AppState<RegisterPage, RegisterController> {
                     ]),
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 15,
                   ),
                   CustomTextformfield(
                     label: 'Senha',
@@ -93,7 +95,7 @@ class _RegisterPageState extends AppState<RegisterPage, RegisterController> {
                     ]),
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 15,
                   ),
                   CustomTextformfield(
                     label: 'Confirma senha',
@@ -110,7 +112,7 @@ class _RegisterPageState extends AppState<RegisterPage, RegisterController> {
                   Center(
                     child: CustomButton(
                       width: double.infinity,
-                      label: 'Cadastrar',
+                      label: 'CADASTRAR',
                       onPressed: () {
                         final formValid =
                             _formKey.currentState?.validate() ?? false;
@@ -121,6 +123,18 @@ class _RegisterPageState extends AppState<RegisterPage, RegisterController> {
                             name: _nameEC.text,
                           );
                         }
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                    child: CustomButton(
+                      width: double.infinity,
+                      label: 'VOLTAR',
+                      onPressed: () {
+                        Get.back();
                       },
                     ),
                   ),

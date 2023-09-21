@@ -80,7 +80,7 @@ class AuthRepository {
     try {
       await ApiClient.account.createRecovery(
         email: email,
-        url: 'http://ec2-15-228-235-228.sa-east-1.compute.amazonaws.com:3000',
+        url: 'http://backend.frontapp.com.br:3000',
         // url: 'https://newpassfrontapp.netlify.app',
       );
       print('erro no envio do email de recuperação de senha');
