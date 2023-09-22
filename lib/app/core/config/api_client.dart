@@ -10,6 +10,7 @@ class ApiClient {
     client
         .setEndpoint(constants.API_END_POINT)
         .setProject(constants.PROJECT_ID)
+        .setLocale('pt-br')
         .setSelfSigned(status: false);
 
     return client;

@@ -53,13 +53,26 @@ class RecoveyPasswordController extends GetxController
     } catch (e) {
       _loading.toggle();
 
+      print(e);
+      late String text;
+      switch (e) {
+        case 'user_not_found':
+          text = 'E-mail não cadastrado!\nCadastre-se no app!';
+          break;
+        case 'general_rate_limit_exceeded':
+          text =
+              'Muitas tentativas de recuperação da senha!\nTente novamente mais tarde!';
+          break;
+      }
+
       _message(
         MessageModel(
           title: 'Atenção!',
-          message: e.toString(),
+          message: text,
           type: MessageType.error,
         ),
       );
+      Get.toNamed(Routes.login);
     }
   }
 }
