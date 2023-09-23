@@ -1,8 +1,10 @@
 import 'dart:developer';
 
+import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:auth_modelo/app/routes/app_pages.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../../core/mixins/loader_mixin.dart';
 import '../../../core/mixins/messages_mixin.dart';
@@ -19,6 +21,8 @@ class LoginController extends GetxController with LoaderMixin, MessagesMixin {
 
   final _loading = false.obs;
   final _message = Rxn<MessageModel>();
+
+  GetStorage storage = GetStorage();
 
   @override
   void onInit() {
@@ -46,7 +50,13 @@ class LoginController extends GetxController with LoaderMixin, MessagesMixin {
     try {
       _loading.toggle();
 
-      await authRepository.login({"email": email, "password": password});
+      User user =
+          await authRepository.login({"email": email, "password": password});
+
+      await storage.write('user', user);
+      if (user.email != '') {
+        await storage.write('userLogged', 'true');
+      }
 
       _message(
         MessageModel(
@@ -55,6 +65,7 @@ class LoginController extends GetxController with LoaderMixin, MessagesMixin {
           type: MessageType.success,
         ),
       );
+
       Get.toNamed(Routes.home);
     } catch (e) {
       _loading.toggle();

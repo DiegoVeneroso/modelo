@@ -57,8 +57,9 @@ class AuthRepository {
         password: map["password"],
       );
       _session = session;
-      print('_session');
-      print(_session?.$id);
+
+      User user = await ApiClient.account.get();
+      return user;
     } on AppwriteException catch (e) {
       _session = null;
       log(e.response['type']);

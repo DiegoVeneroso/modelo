@@ -150,7 +150,7 @@ class _LoginPageState extends AppState<LoginPage, LoginController> {
                                 ),
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),

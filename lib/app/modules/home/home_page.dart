@@ -1,6 +1,7 @@
 import 'package:appwrite/models.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import './home_controller.dart';
 
 // ignore: must_be_immutable
@@ -11,18 +12,6 @@ class HomePage extends GetView<HomeController> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Home'),
-          // title: FutureBuilder<User?>(
-          //   future: authRepository.getUserIfExists(),
-          //   builder: (_, snapshot) {
-          //     if (snapshot.hasError) return const CircularProgressIndicator();
-          //     if (snapshot.connectionState == ConnectionState.waiting) {
-          //       return const CircularProgressIndicator();
-          //     }
-          //     User? user = snapshot.data;
-          //     // return Text(user?.prefs.data['Admin'].toString() ?? '');
-          //     return Text(user!.email.toString());
-          //   },
-          // ),
           actions: [
             IconButton(
                 // onPressed: () => controller.authRepository.logout(),
@@ -33,6 +22,8 @@ class HomePage extends GetView<HomeController> {
         body: FutureBuilder<User?>(
           future: controller.authRepository.getUserIfExists(),
           builder: (_, result) {
+            User userLocal = GetStorage().read('user');
+
             if (result.hasError)
               return Center(
                 child: Column(
@@ -58,17 +49,35 @@ class HomePage extends GetView<HomeController> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // Text(
+                  //   'Usuário da API',
+                  // ),
+                  // Text(
+                  //   user!.$id.toString(),
+                  // ),
+                  // Text(
+                  //   user.name.toString(),
+                  // ),
+                  // Text(
+                  //   user.email.toString(),
+                  // ),
+                  // Text(
+                  //   user.phone.toString(),
+                  // ),
                   Text(
-                    user!.$id.toString(),
+                    'Usuário local',
                   ),
                   Text(
-                    user.name.toString(),
+                    userLocal.$id,
                   ),
                   Text(
-                    user.email.toString(),
+                    userLocal.name,
                   ),
                   Text(
-                    user.phone.toString(),
+                    userLocal.email,
+                  ),
+                  Text(
+                    GetStorage().read('userLogged'),
                   ),
                 ],
               ),

@@ -68,7 +68,9 @@ class RecoveyPasswordController extends GetxController
       _message(
         MessageModel(
           title: 'Atenção!',
-          message: text,
+          message: text.isEmpty
+              ? 'Erro ao recuperar senha!\nTente novamente mais tarde!'
+              : text,
           type: MessageType.error,
         ),
       );

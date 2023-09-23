@@ -3,6 +3,7 @@ import 'package:auth_modelo/app/repository/home_repository.dart';
 import 'package:auth_modelo/app/routes/app_pages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../core/mixins/loader_mixin.dart';
 import '../../core/mixins/messages_mixin.dart';
@@ -10,6 +11,7 @@ import '../../core/mixins/messages_mixin.dart';
 class HomeController extends GetxController with LoaderMixin, MessagesMixin {
   HomeRepository homeRepository;
   AuthRepository authRepository;
+  GetStorage storage;
 
   final _loading = false.obs;
   final _message = Rxn<MessageModel>();
@@ -24,6 +26,7 @@ class HomeController extends GetxController with LoaderMixin, MessagesMixin {
   HomeController(
     this.homeRepository,
     this.authRepository,
+    this.storage,
   );
 
   logout() async {
@@ -32,6 +35,7 @@ class HomeController extends GetxController with LoaderMixin, MessagesMixin {
 
       await authRepository.logout();
       Get.toNamed(Routes.login);
+      storage.write('user', '');
       _message(
         MessageModel(
           title: 'Parabéns!',
